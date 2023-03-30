@@ -3,7 +3,7 @@
 #' @param size Size of simulated data set
 #' @param propMiss Proportion of missingness (30% or 50%)
 #' @param seedNum Seed used for random generation
-#' @param settingMiss Missingness setting, which could be Original, Mod1, Mod2
+#' @param settingMiss Missingness setting, which could be Original or Modified (to be added later)
 #' @import mvtnorm MASS
 #'
 #' @return List of data frames containing the full data set and the data set with missingness
@@ -46,22 +46,184 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
     exp(val)/(1+exp(val))
   }
 
-  if(size==1200 & propMiss==30 & settingMiss=="Original" & settingNumber==1){
-    cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-    psi <- c(-1.6, 2.3, -3.2)
+  if(settingNumber==1){
+    if(propMiss==30){
+      if(size==300  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==600  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==1200  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        psi <- c(-1.6, 2.3, -3.2)
+      }
+    }
+
+    if(propMiss==50){
+        if(size==300  & settingMiss=="Original"){
+          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+          #psi <- c(-1.6, 2.3, -3.2)
+        }
+
+        if(size==600  & settingMiss=="Original"){
+          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+          #psi <- c(-1.6, 2.3, -3.2)
+        }
+
+        if(size==1200  & settingMiss=="Original"){
+          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+          psi <- c(-0.3, -0.4, 1.3)
+        }
+    }
+
+    missBin <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1%*%psi))
+
+    fullDat <- data.frame(missBin, Y, A_2, X_2.mean)
+    names(fullDat)[-c(1:3)] <- paste0('X', 1:p)
+
+    # prepare data set with missingness
+    missDat <- fullDat
+    missDat[which(missDat$missBin==1),]$Y <- NA
+    ## exclude the missBin variable
+    missDat <- missDat[,c(2:ncol(missDat))]
+  }
+
+  if(settingNumber==2){
+    if(propMiss==30){
+      if(size==300  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==600  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==1200  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        psi <- c(-3.8, 2.2, -2.8)
+
+        cm1_cov <- cbind(1, X_2.mean[,1])
+        psi_cov <- c(-3, -0.5)
+
+
+      }
+    }
+
+    if(propMiss==50){
+      if(size==300  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==600  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==1200  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        psi <- c(-0.6, 0.5, -0.7)
+
+        cm1_cov <- cbind(1, X_2.mean[,1])
+        psi_cov <- c(-2.5, -0.8)
+      }
+    }
+
+    missBin <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1%*%psi))
+
+    missBin_cov <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1_cov%*%psi_cov))
+
+
+    fullDat <- data.frame(missBin, missBin_cov, Y, A_2, X_2.mean)
+    names(fullDat)[-c(1:4)] <- paste0('X', 1:p)
+
+    # prepare data set with missingness
+    missDat <- fullDat
+    missDat[which(missDat$missBin==1),]$Y <- NA
+    missDat[which(missDat$missBin_cov==1),]$X4 <- NA ## missingness in covariate
+
+    ## exclude the missBin and missBin_cov variables
+    missDat <- missDat[,c(3:ncol(missDat))]
+
 
   }
 
-  missBin <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1%*%psi))
 
-  fullDat <- data.frame(missBin, Y, A_2, X_2.mean)
-  names(fullDat)[-c(1:3)] <- paste0('X', 1:p)
+  if(settingNumber==3){
+    if(propMiss==30){
+      if(size==300  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
 
-  # prepare data set with missingness
-  missDat <- fullDat
-  missDat[which(missDat$missBin==1),]$Y <- NA
-  ## exclude the missBin variable
-  missDat <- missDat[,c(2:ncol(missDat))]
+      if(size==600  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==1200  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        psi <- c(-1.6, 0.1, 0.2)
+
+        cm1_cov <- cbind(1, X_2.mean[,1])
+        psi_cov <- c(-3.7, -0.3)
+
+
+      }
+    }
+
+    if(propMiss==50){
+      if(size==300  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==600  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        #psi <- c(-1.6, 2.3, -3.2)
+      }
+
+      if(size==1200  & settingMiss=="Original"){
+        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        psi <- c(-3.8, 2.7, -4)
+
+        cm1_cov <- cbind(1, X_2.mean[,1])
+        psi_cov <- c(-0.3, 2.5)
+      }
+    }
+
+    missBin <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1%*%psi))
+
+    missBin_cov <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1_cov%*%psi_cov))
+
+    p_1 <- p-1
+    missBin_covB <- matrix(rbinom(n*p_1, 1, 0.03),n,p_1)
+
+
+    fullDat <- data.frame(missBin, missBin_covB[,1:3], missBin_cov, missBin_covB[,4], Y, A_2, X_2.mean)
+    names(fullDat)[-c(1:8)] <- paste0('X', 1:p)
+
+    # prepare data set with missingness
+    missDat <- fullDat
+    missDat[which(missDat$missBin==1),]$Y <- NA
+
+    ## missingness in covariates
+    missList <- as.list(fullDat[,2:6])
+    targList <- as.list(fullDat[,-c(1:8)])
+    missDat[,-c(1:8)] <- as.data.frame(mapply(function(miss, targ) ifelse(miss==1, NA, targ),missList, targList))
+
+    ## exclude the missBin, missBin_cov, and missBin_covB variables
+    missDat <- missDat[,c(7:ncol(missDat))]
+
+  }
+
 
   dfsList <- list(fullDat, missDat)
 
