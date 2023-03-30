@@ -69,6 +69,14 @@ example_mBoot <- run_mBoot(missDat, numImp=5, seedNum=215, reps=10, eta=0.05)
 example_mBoot[[3]] ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
 #>      0.025    0.975
 #> 1 6.752622 9.626606
+
+## running double bootstrap procedure for selecting alpha
+## candidate values for alpha
+alpha_see <- seq(from= 0.025, to=1 ,by=0.025)
+example_db <- run_double_boot(missDat, 5, alpha_see, seedNum=215, iters=5, B2=5, eta=0.05, runLPC=4 )
+example_db
+#>        alpha coverage
+#> db_Res 0.275        1
 ```
 
 <!-- NOTE TO JENNY: If you get an error when knitting about not being able to find a function, make sure it is included in NAMESPACE as export(functionName)

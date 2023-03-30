@@ -3,6 +3,7 @@
 export(genDat)
 export(split_Val)
 export(run_mBoot)
+export(run_double_boot)
 import(MASS)
 import(mice)
 import(mvtnorm)
