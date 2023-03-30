@@ -80,41 +80,6 @@ run_double_boot <- function(missDat, numImp, alpha_see, seedNum, iters, B2, eta=
   })
 
 
-  # consist_dhat.mod <- function(seeDf){
-  #   see_df <- as.data.frame(seeDf)
-  #   see_sub <- subset.data.frame(seeDf, select=c("X1", "X2", "X3", "X4", "X5"))
-  #   see_m <- as.matrix(see_sub)
-  #   see_opt <- giveOpt_dhat.mod(see_m) # get recommended trtmt options under decision rule
-  #   see_C <- which(see_opt==as.numeric(as.character(see_df$A_2))) # get indices for individuals that are consistent
-  #   see_subC <- see_df[see_C,] # subset of individuals who are consistent
-  #   see_Q <- mean(see_subC$Y)
-  #
-  #   ##  estimate propensity score -- NEW
-  #   see_df$C <- ifelse(see_opt==as.numeric(as.character(see_df$A_2)), 1, 0)
-  #   see_ps <- rep(0.5, times=nrow(see_df)) ## new -- March 22, 2022
-  #   see_ind <- ifelse(see_opt==-1, 1, 0)
-  #   see_pid <- ifelse(see_ind==1, see_ps, (1-see_ps) )
-  #
-  #   ## IPW estimate
-  #   see_ps_ipw <- mean(see_df$C * see_df$Y/see_pid)
-  #
-  #   ## IPW variance
-  #   see_An_IPW <- (see_df$C * see_df$Y/see_pid) - see_ps_ipw
-  #   see_A_IPW <- mean(see_An_IPW^2)
-  #
-  #   ## AIPW estimate
-  #   see_ps_aipw <- see_ps_ipw - mean( ( (see_df$C - see_pid)/(see_pid) ) * see_Q )
-  #
-  #   return(see_ps_aipw)
-  #
-  # }
-  #
-  # ##############################
-  # ## Estimate Value ##
-  # ##############################
-  # Val_imp_list <- lapply(df_list, consist_dhat.mod)
-  # ## returns a list of outcomes corresponding to recommended trtmt under decision rule
-
   ValRes <- mean (unlist (lapply (Val_imp_list, mean)))
 
   ## candidate values for alpha
