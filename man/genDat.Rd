@@ -20,7 +20,7 @@ genDat(
 
 \item{seedNum}{Seed used for random generation}
 
-\item{settingMiss}{Missingness setting, which could be Original, Mod1, Mod2}
+\item{settingMiss}{Missingness setting, which could be Original or Modified (to be added later)}
 }
 \value{
 List of data frames containing the full data set and the data set with missingness

@@ -2,3 +2,4 @@
 
 import(MASS)
 import(mvtnorm)
+import(mice)
