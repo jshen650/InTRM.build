@@ -10,7 +10,8 @@
 
 genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumber, splitData=FALSE){
   ## code that will automatically generate a single data set given argument specifications
-  ## Original Setting = manuscript settings; additional settings have to do with Missingness Explorations
+  ## Original Setting = manuscript settings
+  # Additional settings may be added later and have to do with explorations discussed in Supplement
 
   ## consider 5 covariates
   n <- size
