@@ -157,6 +157,8 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
 
 
   if(settingNumber==3){
+    p_1 <- p-1
+
     if(propMiss==30){
       if(size==300  & settingMiss=="Original"){
         cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
@@ -174,6 +176,8 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
 
         cm1_cov <- cbind(1, X_2.mean[,1])
         psi_cov <- c(-3.7, -0.3)
+
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.03),n,p_1)
 
 
       }
@@ -196,15 +200,14 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
 
         cm1_cov <- cbind(1, X_2.mean[,1])
         psi_cov <- c(-0.3, 2.5)
+
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.05),n,p_1)
       }
     }
 
     missBin <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1%*%psi))
 
     missBin_cov <- mapply(function(x){ rbinom(1,1,prob=x)}, x=expit(cm1_cov%*%psi_cov))
-
-    p_1 <- p-1
-    missBin_covB <- matrix(rbinom(n*p_1, 1, 0.03),n,p_1)
 
 
     fullDat <- data.frame(missBin, missBin_covB[,1:3], missBin_cov, missBin_covB[,4], Y, A_2, X_2.mean)
