@@ -1,15 +1,16 @@
 #' Run the double bootstrap procedure for selecting alpha to use with the m-out-of-n bootstrap
 #'
-#' @param missDat
-#' @param numImp
-#' @param alpha_see
-#' @param seedNum
-#' @param iters
-#' @param B2
-#' @param eta
-#' @param runLPC
+#' @param missDat Data frame containing missingness
+#' @param numImp Scalar for number of imputations
+#' @param alpha_see Vector of candidate alpha values
+#' @param seedNum Scalar for seed
+#' @param iters Scalar for number of iterations to perform for outer bootstrap
+#' @param B2 Scalar for number of conditional bootstraps to perform
+#' @param eta Scalar for the (1-eta)% confidence set
+#' @param runLPC If TRUE, function is run using the number of cores specified for the LPC grid;
+#' Otherwise, a user-specified number of cores to use
 #'
-#' @import mice
+#' @import mice parallel
 #'
 #' @return Vector for the recommended alpha and the corresponding coverage
 run_double_boot <- function(missDat, numImp, alpha_see, seedNum, iters, B2, eta=0.05, runLPC){
