@@ -63,7 +63,7 @@ example_mBoot[[3]] ## final 95% confidence interval from running m-out-of-n boot
 ## running double bootstrap procedure for selecting alpha
 ## candidate values for alpha
 alpha_see <- seq(from= 0.025, to=1 ,by=0.025)
-example_db <- run_double_boot(missDat, 5, alpha_see, seedNum=215, iters=5, B2=5, eta=0.05, runLPC=4 )
+example_db <- run_double_boot(missDat, numImp=5, alpha_see=alpha_see, seedNum=215, iters=5, B2=5, eta=0.05, runLPC=4 )
 example_db
 
 ```
