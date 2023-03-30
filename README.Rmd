@@ -35,10 +35,34 @@ devtools::install_github("jshen650/InTRM.build")
 
 This is a basic example which shows you how to simulate data and apply one of the two approaches for estimating optimal decision rules following multiple imputation:
 
-```{r example, eval=FALSE, include=FALSE}
+```{r example, include=FALSE}
 library(InTRM.build)
 ## basic example code
 ```
+
+```{r example data, include=TRUE}
+## simulate data from one of the scenarios - say, n=300 with 30% missingness only in Y
+example_dat <- InTRM.build::genDat(size=300, propMiss = 30, seedNum = 215, settingNumber = 1)
+
+str(example_dat) ## data set without and with missingness returned
+
+missDat <- example_dat[[2]] ## data set containing missingness
+
+```
+
+```{r example method, include=TRUE}
+
+## estimate Value and variance with the data splitting approach
+example_Val <- split_Val(missDat, 5, seedNum = 215)
+example_Val
+
+## estimate a 95% confidence interval with the m-out-of-n bootstrap
+example_mBoot <- run_mBoot(missDat, numImp=5, seedNum=215, reps=10, eta=0.05)
+example_mBoot[[3]] ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
+
+```
+
+<!-- NOTE TO JENNY: If you get an error when knitting about not being able to find a function, make sure it is included in NAMESPACE as export(functionName)
 
 <!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->
 

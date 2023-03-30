@@ -7,7 +7,6 @@
 #' @import mvtnorm MASS
 #'
 #' @return List of data frames containing the full data set and the data set with missingness
-
 genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumber, splitData=FALSE){
   ## code that will automatically generate a single data set given argument specifications
   ## Original Setting = manuscript settings

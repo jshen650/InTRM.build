@@ -1,8 +1,8 @@
 Package: InTRM.build
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Individualized Treatment Rules with Multiple Imputation
 Version: 0.1.0
-Author: Who wrote it
+Author: Jenny Shen
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
