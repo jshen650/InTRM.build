@@ -47,37 +47,37 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
     exp(val)/(1+exp(val))
   }
 
-  if(settingNumber==1){
+  if(settingMiss=="Original"){
+    cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+    cm1_cov <- cbind(1, X_2.mean[,1])
+  }
+
+
+  if(settingNumber==1 & settingMiss=="Original"){
     if(propMiss==30){
-      if(size==300  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==300){
+        psi <- c(-0.7, 2.7, -1.9)
       }
 
-      if(size==600  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==600){
+        psi <- c(-1.1, 0.7, -1.4)
       }
 
-      if(size==1200  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+      if(size==1200){
         psi <- c(-1.6, 2.3, -3.2)
       }
     }
 
     if(propMiss==50){
-        if(size==300  & settingMiss=="Original"){
-          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-          #psi <- c(-1.6, 2.3, -3.2)
+        if(size==300){
+          psi <- c(0.2, 0.1, 3.9)
         }
 
-        if(size==600  & settingMiss=="Original"){
-          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-          #psi <- c(-1.6, 2.3, -3.2)
+        if(size==600){
+          psi <- c(1.4, 1.6, -3.3)
         }
 
-        if(size==1200  & settingMiss=="Original"){
-          cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+        if(size==1200 ){
           psi <- c(-0.3, -0.4, 1.3)
         }
     }
@@ -94,45 +94,38 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
     missDat <- missDat[,c(2:ncol(missDat))]
   }
 
-  if(settingNumber==2){
+  if(settingNumber==2 & settingMiss=="Original"){
     if(propMiss==30){
-      if(size==300  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==300){
+        psi <- c(-2.1, 3, 0.6)
+        psi_cov <- c(-3.8, -0.7)
+
       }
 
-      if(size==600  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==600){
+        psi <- c(-2.4, 0.5, -1.7)
+        psi_cov <- c(-1.7, 0.1)
       }
 
-      if(size==1200  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+      if(size==1200){
         psi <- c(-3.8, 2.2, -2.8)
-
-        cm1_cov <- cbind(1, X_2.mean[,1])
         psi_cov <- c(-3, -0.5)
-
-
       }
     }
 
-    if(propMiss==50){
-      if(size==300  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+    if(propMiss==50 & settingMiss=="Original"){
+      if(size==300){
+        psi <- c(-0.6, 3.7, -3.9)
+        psi_cov <- c(-3.3, -1)
       }
 
-      if(size==600  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==600){
+        psi <- c(-1.4, 1, -2.2)
+        psi_cov <- c(-2.1, -0.5)
       }
 
-      if(size==1200  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+      if(size==1200){
         psi <- c(-0.6, 0.5, -0.7)
-
-        cm1_cov <- cbind(1, X_2.mean[,1])
         psi_cov <- c(-2.5, -0.8)
       }
     }
@@ -157,51 +150,46 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
   }
 
 
-  if(settingNumber==3){
+  if(settingNumber==3 & settingMiss=="Original"){
     p_1 <- p-1
 
     if(propMiss==30){
-      if(size==300  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==300 ){
+        psi <- c(-3.2, 0.4, 1.1)
+        psi_cov <- c(-3.7, -0.4)
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.05),n,p_1)
+
       }
 
-      if(size==600  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
-      }
-
-      if(size==1200  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        psi <- c(-1.6, 0.1, 0.2)
-
-        cm1_cov <- cbind(1, X_2.mean[,1])
-        psi_cov <- c(-3.7, -0.3)
-
+      if(size==600){
+        psi <- c(-1.5, 0.4, 0.3)
+        psi_cov <- c(-3.4, -0.2)
         missBin_covB <- matrix(rbinom(n*p_1, 1, 0.03),n,p_1)
+      }
 
-
+      if(size==1200){
+        psi <- c(-1.6, 0.1, 0.2)
+        psi_cov <- c(-3.7, -0.3)
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.03),n,p_1)
       }
     }
 
     if(propMiss==50){
-      if(size==300  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==300){
+        psi <- c(-2.1, 3, 0.6)
+        psi_cov <- c(-3.3, -0.7)
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.08),n,p_1)
       }
 
-      if(size==600  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
-        #psi <- c(-1.6, 2.3, -3.2)
+      if(size==600){
+        psi <- c(-2.3, 0.7, 2.1)
+        psi_cov <- c(-1.8, 0.1)
+        missBin_covB <- matrix(rbinom(n*p_1, 1, 0.05),n,p_1)
       }
 
-      if(size==1200  & settingMiss=="Original"){
-        cm1 <- cbind(1, X_2.mean[,1], A_2*X_2.mean[,2])
+      if(size==1200){
         psi <- c(-3.8, 2.7, -4)
-
-        cm1_cov <- cbind(1, X_2.mean[,1])
         psi_cov <- c(-0.3, 2.5)
-
         missBin_covB <- matrix(rbinom(n*p_1, 1, 0.05),n,p_1)
       }
     }
