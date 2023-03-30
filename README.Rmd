@@ -33,7 +33,7 @@ devtools::install_github("jshen650/InTRM.build")
 
 ## Example
 
-This is a basic example which shows you how to simulate data and apply one of the two approaches for estimating optimal decision rules following multiple imputation:
+This is a basic example which shows how to generate a data set from one of the scenarios described in the paper and apply data splitting or the m-out-of-n bootstrap approach with multiple imputation:
 
 ```{r example, include=FALSE}
 library(InTRM.build)

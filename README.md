@@ -25,9 +25,9 @@ devtools::install_github("jshen650/InTRM.build")
 
 ## Example
 
-This is a basic example which shows you how to simulate data and apply
-one of the two approaches for estimating optimal decision rules
-following multiple imputation:
+This is a basic example which shows how to generate a data set from one
+of the scenarios described in the paper and apply data splitting or the
+m-out-of-n bootstrap approach with multiple imputation:
 
 ``` r
 ## simulate data from one of the scenarios - say, n=300 with 30% missingness only in Y
@@ -70,6 +70,8 @@ example_mBoot[[3]] ## final 95% confidence interval from running m-out-of-n boot
 #>      0.025    0.975
 #> 1 6.752622 9.626606
 ```
+
+<!-- NOTE TO JENNY: If you get an error when knitting about not being able to find a function, make sure it is included in NAMESPACE as export(functionName)
 
 <!-- What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so: -->
 <!-- ```{r cars} -->
