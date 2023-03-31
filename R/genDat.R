@@ -91,6 +91,7 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
     missDat[which(missDat$missBin==1),]$Y <- NA
     ## exclude the missBin variable
     missDat <- missDat[,c(2:ncol(missDat))]
+    fullDat <- fullDat[,c(2:ncol(fullDat))]
   }
 
   if(settingNumber==2 & settingMiss=="Original"){
@@ -144,6 +145,7 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
 
     ## exclude the missBin and missBin_cov variables
     missDat <- missDat[,c(3:ncol(missDat))]
+    fullDat <- fullDat[,c(3:ncol(fullDat))]
 
 
   }
@@ -212,11 +214,12 @@ genDat <- function(size, propMiss, seedNum, settingMiss="Original", settingNumbe
 
     ## exclude the missBin, missBin_cov, and missBin_covB variables
     missDat <- missDat[,c(7:ncol(missDat))]
+    fullDat <- fullDat[,c(7:ncol(fullDat))]
 
   }
 
 
-  dfsList <- list(fullDat, missDat)
+  dfsList <- list(fullDat=fullDat, missDat=missDat)
 
 
   return(dfsList)
