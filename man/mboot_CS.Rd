@@ -7,7 +7,7 @@
 mboot_CS(eta, m, mboot_multi_res, estVal)
 }
 \arguments{
-\item{eta}{Scalar for the (1-eta)\% confidence set}
+\item{eta}{Scalar for the (1-eta)% confidence set}
 
 \item{m}{Scalar for subsample size, where m < n}
 
@@ -16,7 +16,7 @@ mboot_CS(eta, m, mboot_multi_res, estVal)
 \item{estVal}{Scalar for estimate of Value that the confidence set surrounds}
 }
 \value{
-Vector representing the lower and upper bounds of the (1-eta)\% confidence set
+Vector representing the lower and upper bounds of the (1-eta)% confidence set
 }
 \description{
 Confidence Set of m-out-of-n bootstrap results

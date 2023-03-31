@@ -16,7 +16,7 @@ genDat(
 \arguments{
 \item{size}{Size of simulated data set}
 
-\item{propMiss}{Proportion of missingness (30\% or 50\%)}
+\item{propMiss}{Proportion of missingness (30% or 50%)}
 
 \item{seedNum}{Seed used for random generation}
 

@@ -1,6 +1,6 @@
 #' Confidence Set of m-out-of-n bootstrap results
 #'
-#' @param eta Scalar for the (1-eta)% confidence set
+#' @param eta Scalar for the (1-eta)\% confidence set
 #' @param m Scalar for subsample size, where m < n
 #' @param mboot_multi_res Vector of results from multiple repetitions of the m-out-of-n bootstrap
 #' @param estVal Scalar for estimate of Value that the confidence set surrounds

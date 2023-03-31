@@ -1,7 +1,7 @@
 #' Generate a simulated data set containing missingness
 #'
 #' @param size Size of simulated data set
-#' @param propMiss Proportion of missingness (30% or 50%)
+#' @param propMiss Proportion of missingness (30\% or 50\%)
 #' @param seedNum Seed used for random generation
 #' @param settingMiss Missingness setting, which could be Original or Modified (to be added later)
 #' @import mvtnorm MASS

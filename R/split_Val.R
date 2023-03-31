@@ -111,8 +111,14 @@ split_Val <- function(missDat, numImp, seedNum){
   ## Return Output ##
   ##############################
 
-  out1 <- data.frame(Val_proIPW, Val_v2IPW_var , Val_AIPW, Val_AIPW_var)
-  colnames(out1) <- c("Value_IPW","Var_IPW" , "Value_AIPW", "Var_AIPW")
+  norm95 <- qnorm(p=0.975)
+  lower_AIPW <- Val_AIPW - norm95*(sqrt(Val_AIPW_var))
+  upper_AIPW <- Val_AIPW + norm95*(sqrt(Val_AIPW_var))
+  lower_IPW <- Val_proIPW - norm95*Val_v2IPW_var
+  upper_IPW <- Val_proIPW + norm95*Val_v2IPW_var
+
+  out1 <- data.frame(Val_proIPW, Val_v2IPW_var ,lower_IPW, upper_IPW, Val_AIPW, Val_AIPW_var, lower_AIPW, upper_AIPW)
+  colnames(out1) <- c("Value_IPW","Var_IPW" ,"lower_IPW","upper_IPW" ,"Value_AIPW", "Var_AIPW","lower_AIPW","upper_AIPW" )
   return(out1)
 
 }

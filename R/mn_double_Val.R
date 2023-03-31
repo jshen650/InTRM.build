@@ -4,21 +4,21 @@
 #' @param numImp Scalar for number of imputations
 #' @param alpha_see Vector of candidate alpha values
 #' @param seedNum Scalar for seed
-#' @param iters Scalar for number of iterations to perform for outer bootstrap
+#' @param B1 Scalar for number of outer bootstraps to run
 #' @param B2 Scalar for number of conditional bootstraps to perform
-#' @param eta Scalar for the (1-eta)% confidence set
-#' @param runLPC If TRUE, function is run using the number of cores specified for the LPC grid;
+#' @param eta Scalar for the (1-eta)\% confidence set
+#' @param nCores If "LSB", function is run using the number of cores specified for the LPC grid;
 #' Otherwise, a user-specified number of cores to use
 #'
 #' @import mice parallel
 #'
 #' @return Vector for the recommended alpha and the corresponding coverage
-run_double_boot <- function(missDat, numImp, alpha_see, seedNum, iters, B2, eta=0.05, runLPC){
+mn_double_Val <- function(missDat, numImp, alpha_see, seedNum, B1, B2, eta=0.05, nCores){
 
-  if(runLPC==TRUE){
+  if(nCores=="LSB"){
     nCores = as.numeric(Sys.getenv('LSB_DJOB_NUMPROC'))
   } else{
-    nCores = runLPC
+    nCores = nCores
   }
 
 
@@ -84,14 +84,14 @@ run_double_boot <- function(missDat, numImp, alpha_see, seedNum, iters, B2, eta=
   ValRes <- mean (unlist (lapply (Val_imp_list, mean)))
 
   ## candidate values for alpha
-  alpha_see <- seq(from= 0.025, to=1 ,by=0.025)
+  # alpha_see <- seq(from= 0.025, to=1 ,by=0.025)
 
-  db_Res <- c(0.025, 0)
+  db_Res <- c(alpha_see[1], 0)
   for (aVal in alpha_see){
-    run_double_boot = mclapply(1:iters, double_boot, eta=eta,estVal=ValRes, B2=B2, see_df_list=df_list,
+    run_double_boot = mclapply(1:B1, double_boot, eta=eta,estVal=ValRes, B2=B2, see_df_list=df_list,
                                coef_dr=coef_dr, current_alpha=aVal, mc.cores = nCores )
     get_coverage = mean(do.call(rbind, run_double_boot))
-    if(get_coverage >= 0.95){
+    if(get_coverage >= (1-eta)){
       db_Res <- c(aVal, get_coverage)
       break
     }

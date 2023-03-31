@@ -4,13 +4,14 @@
 #' @param numImp Scalar for number of imputations
 #' @param seedNum Scalar for seed
 #' @param reps Scalar for number of m-out-of-n bootstrap repetitions to perform
-#' @param eta Scalar for the (1-eta)% confidence set
+#' @param eta Scalar for the (1-eta)\% confidence set
+#' @param alpha Scalar for the alpha value to use when estimating m
 #'
 #' @import mice
 #'
 #' @return List containing the 95% CI formed with the m-out-of-n bootstraps from R imputations,
 #' the choice of 'm', and the final 95% CI with m-out-of-n bootstrap
-run_mBoot <- function(missDat, numImp, seedNum, reps, eta=0.05){
+mn_Val <- function(missDat, numImp, seedNum, reps, eta=0.05, alpha=0.025){
 
   ##############################
   ## Obtain imputed data sets ##
@@ -78,7 +79,7 @@ run_mBoot <- function(missDat, numImp, seedNum, reps, eta=0.05){
   ##############################
 
   check_get_m <- lapply(df_list, function(x){
-    get_m_alpha(x, alpha=0.025, coef_dr=coef_dr)})
+    get_m_alpha(x, alpha=alpha, coef_dr=coef_dr)})
 
   ## use the minimum value of m across imputations
   check_get_m <- ceiling( min(unlist(check_get_m)) )
@@ -108,7 +109,7 @@ run_mBoot <- function(missDat, numImp, seedNum, reps, eta=0.05){
   ## return list of all 95% confidence intervals for the m-out-of-n bootstraps on each imputed data set,
   ## the choice of m, which is the minimum m across imputations
   ## and the final averaged 95% confidence interval from the m-out-of-n bootstrap
-  dfsList <- list(out1, as.data.frame(check_get_m), as.data.frame(t(mBootCS_avg)))
+  dfsList <- list(out1, as.data.frame(check_get_m),ValRes ,as.data.frame(t(mBootCS_avg)))
   return(dfsList)
 
 }

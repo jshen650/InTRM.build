@@ -40,8 +40,10 @@ library(InTRM.build)
 ## basic example code
 ```
 
+Data can be simulated with the `genDat` function. Data set size, proportion of row-wise missingness, seed number, and missingness setting number can be specified with "size," "propMiss," "seedNum," and "settingNumber," respectively. Three missingness settings were considered in our paper. Setting 1 refers to MAR missingness only in $Y$; Setting 2 refers to MAR missingness in $Y$ and in covariate $X_4$; and Setting 3 refers to MAR missingness in $Y$ and $X_4$ with MCAR missingness in the other four covariates.
+
 ```{r example data, include=TRUE}
-## simulate data from one of the scenarios - say, n=300 with 30% missingness only in Y
+## Simulate data from one of the scenarios - say, n=300 with 30% missingness only in Y (Setting 1)
 example_dat <- InTRM.build::genDat(size=300, propMiss = 30, seedNum = 215, settingNumber = 1)
 
 str(example_dat) ## data set without and with missingness returned
@@ -50,20 +52,30 @@ missDat <- example_dat[[2]] ## data set containing missingness
 
 ```
 
+Value and the variance of the Value can be estimated with the data splitting approach using `split_Val`. Alternatively, the $m$-out-of-$n$ bootstrap can be run with `mn_Val`, which allows for a user-specified value of $\alpha$ that is used for estimating the size of the resamples, $m$. To determine a recommended $\alpha$, the double bootstrap procedure can be run with `mn_double_Val`.
+
 ```{r example method, include=TRUE}
 
 ## estimate Value and variance with the data splitting approach
-example_Val <- split_Val(missDat, 5, seedNum = 215)
+## on missing data set, specifying 5 imputations
+example_Val <- split_Val(missDat, numImp=5, seedNum = 215)
 example_Val
 
-## estimate a 95% confidence interval with the m-out-of-n bootstrap
-example_mBoot <- run_mBoot(missDat, numImp=5, seedNum=215, reps=10, eta=0.05)
-example_mBoot[[3]] ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
+## estimate a (1-eta)% confidence interval with the m-out-of-n bootstrap on data set with missingness
+## specifying r=5 imputations
+## and performing 10 repetitions of the m-out-of-n bootstrap that estimates m with a specified alpha value
+example_mBoot <- mn_Val(missDat, numImp=5, seedNum=215, reps=10, eta=0.05, alpha=0.025)
+example_mBoot[[3]] ## AIPW estimate of Value
+example_mBoot[[4]] ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
 
-## running double bootstrap procedure for selecting alpha
-## candidate values for alpha
+
+## to determine a recommended alpha, the double bootstrap procedure can be used for obtaining (1-eta)% coverage
+# candidate values for alpha
 alpha_see <- seq(from= 0.025, to=1 ,by=0.025)
-example_db <- run_double_boot(missDat, numImp=5, alpha_see=alpha_see, seedNum=215, iters=5, B2=5, eta=0.05, runLPC=4 )
+# running the double bootstrap procedure on data sets with missingness by specifying the number of imputations,
+# a vector of candidate values of alpha, the number of outer (B1) and conditional (B2) bootstraps to perform,
+# and the number of cores to use with mclapply
+example_db <- mn_double_Val(missDat, numImp=5, alpha_see=alpha_see, seedNum=215, B1=5, B2=5, eta=0.05, nCores=4 )
 example_db
 
 ```

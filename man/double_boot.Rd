@@ -9,7 +9,7 @@ double_boot(i, eta, estVal, B2, see_df_list, coef_dr, current_alpha)
 \arguments{
 \item{i}{Scalar representing a seed or iteration}
 
-\item{eta}{Scalar for the (1-eta)\% confidence set}
+\item{eta}{Scalar for the (1-eta)% confidence set}
 
 \item{estVal}{Scalar for the estimate of Value that the confidence set is meant to surround}
 
