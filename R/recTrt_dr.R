@@ -8,10 +8,16 @@
 #'
 recTrt_dr <- function(matCov, coef_dr){
   ## gather components of decision rule
+
+  cov_length <- ncol(matCov)
+  lastcov_index <- 2+cov_length
+  firstint_index <- 3+cov_length
+  lastint_index <- firstint_index+cov_length-1
+
   intercept_dr <- coef_dr[1]
   trtcoef_dr <- coef_dr[2]
-  covcoef_dr <- coef_dr[3:7]
-  intcoef_dr <- coef_dr[8:12]
+  covcoef_dr <- coef_dr[3:lastcov_index]
+  intcoef_dr <- coef_dr[firstint_index:lastint_index]
 
   assign1 <- 1
   assign2 <- -1

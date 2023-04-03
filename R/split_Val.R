@@ -43,14 +43,16 @@ split_Val <- function(missDat, numImp, seedNum){
   imputed_res_train <- mice(train_dat, m=numImp, meth=meth, pred=pred, seed=seedNum, print=FALSE)
   imputed_res_test <- mice(test_dat, m=numImp, meth=meth, pred=pred, seed=seedNum, print=FALSE)
 
+  derivLength <- length(covariates)
+
   train_list <- lapply(1:numImp, function(i){
-    df <- complete(imputed_res_train, i)[,-c( (ncol(train_dat)-5):(ncol(train_dat)))] # exclude the derived columns so can continue w older code
+    df <- complete(imputed_res_train, i)[,-c( (ncol(train_dat)-derivLength):(ncol(train_dat)))] # exclude the derived columns so can continue w older code
     df$A_2 <- as.factor(df$A_2)
     df
   })
 
   test_list <- lapply(1:numImp, function(i){
-    df <- complete(imputed_res_test, i)[,-c( (ncol(test_dat)-5):(ncol(test_dat)))] # exclude the derived columns so can continue w older code
+    df <- complete(imputed_res_test, i)[,-c( (ncol(test_dat)-derivLength):(ncol(test_dat)))] # exclude the derived columns so can continue w older code
     df$A_2 <- as.factor(df$A_2)
     df
   })

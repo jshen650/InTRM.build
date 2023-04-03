@@ -16,8 +16,14 @@ ValEst <- function(testDf, coef_dr, isSplit=TRUE, estVar=TRUE){
     n <- nrow(testDf)
   }
 
+  nCov <- ncol(testDf)
+
   test_df <- as.data.frame(testDf)
-  test_sub <- subset.data.frame(testDf, select=c("X1", "X2", "X3", "X4", "X5"))
+
+  ## assumes Y and A_2 are in the first two columns
+  ## with covariates in columns 3 to end
+  test_sub <- testDf[,3:ncol(testDf)]
+
   test_m <- as.matrix(test_sub)
   test_opt <- recTrt_dr(test_m, coef_dr) # get recommended trtmt options under decision rule
   test_C <- which(test_opt==as.numeric(as.character(test_df$A_2))) # get indices for individuals that are consistent
@@ -62,7 +68,10 @@ ValEst <- function(testDf, coef_dr, isSplit=TRUE, estVar=TRUE){
   test_part <- as.vector((test_df$C - test_pid)/(test_pid))
   test_D <- colMeans(-1*test_part * test_dQd)
   test_G <-as.vector(test_df$C*{test_df$Y - test_Q}/test_pid^2*{-1}^{test_opt})
-  test_ps_mm <- model.matrix( glm(A_2 ~ X1 + X2 + X3 + X4 + X5, data = test_df, family = "binomial"))
+
+  mainCov <- colnames(test_mm)[-c(1:2)]
+
+  test_ps_mm <- model.matrix( glm(as.formula(paste("A_2~", paste(mainCov, collapse="+"))), data = test_df, family = "binomial"))
 
   test_G <- colMeans(x=test_G*test_ps*(1-test_ps)*test_ps_mm)
 
