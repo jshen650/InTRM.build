@@ -109,7 +109,9 @@ mn_Val <- function(missDat, numImp, seedNum, reps, eta=0.05, alpha=0.025){
   ## return list of all 95% confidence intervals for the m-out-of-n bootstraps on each imputed data set,
   ## the choice of m, which is the minimum m across imputations
   ## and the final averaged 95% confidence interval from the m-out-of-n bootstrap
-  dfsList <- list(out1, as.data.frame(check_get_m),ValRes ,as.data.frame(t(mBootCS_avg)))
+  m_opt <- as.data.frame(check_get_m)
+  colnames(m_opt) <- "m_opt"
+  dfsList <- list(CI_all = out1, m_opt = m_opt, Value_AIPW = ValRes , CI_fin = as.data.frame(t(mBootCS_avg)))
   return(dfsList)
 
 }

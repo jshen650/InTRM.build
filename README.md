@@ -86,9 +86,12 @@ example_Val
 ## specifying r=5 imputations
 ## and performing 10 repetitions of the m-out-of-n bootstrap that estimates m with a specified alpha value
 example_mBoot <- mn_Val(missDat, numImp=5, seedNum=215, reps=10, eta=0.05, alpha=0.025)
-example_mBoot[[3]] ## AIPW estimate of Value
+example_mBoot$m_opt ## recommended choice of m
+#>   m_opt
+#> 1   265
+example_mBoot$Value_AIPW ## AIPW estimate of Value
 #> [1] 8.459346
-example_mBoot[[4]] ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
+example_mBoot$CI_fin ## final 95% confidence interval from running m-out-of-n bootstrap on data sets imputed r=5 times
 #>      0.025    0.975
 #> 1 6.752622 9.626606
 
