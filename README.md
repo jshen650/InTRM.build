@@ -3,7 +3,7 @@
 
 # InTRM.build
 
-InTRM.build is a rough version of the package that will later be made
+InTRM.build is a working version of the package that will later be made
 publicly available and referred to as InTRM. The Individualized
 Treatment Rules following Multiple Imputation (InTRM) package can be
 used for implementing the methodology described in our paper,

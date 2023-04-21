@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 # InTRM.build
 
-InTRM.build is a rough version of the package that will later be made publicly available and referred to as InTRM. The Individualized Treatment Rules following Multiple Imputation (InTRM) package can be used for implementing the methodology described in our paper, "Estimation and Evaluation of Individualized Treatment Rules following Multiple Imputation." The m-out-of-n bootstrap approach used in our work was adapted from the original work by Chakraborty et al (2013).
+InTRM.build is a working version of the package that will later be made publicly available and referred to as InTRM. The Individualized Treatment Rules following Multiple Imputation (InTRM) package can be used for implementing the methodology described in our paper, "Estimation and Evaluation of Individualized Treatment Rules following Multiple Imputation." The m-out-of-n bootstrap approach used in our work was adapted from the original work by Chakraborty et al (2013).
 
 
 <!-- badges: start -->
